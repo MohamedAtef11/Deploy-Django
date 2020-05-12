@@ -29,7 +29,7 @@ SECRET_KEY = 'l-iwurzterq_9zmc_l(p45#0-$7wehh14^l+n(^y$$_bvn7ivv'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
