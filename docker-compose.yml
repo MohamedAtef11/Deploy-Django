@@ -6,13 +6,15 @@ services:
     build: ./web
     command: gunicorn crowdFunding.wsgi:application --bind 0.0.0.0:8000
     volumes:
-      - static_volume:/deploy/web/crowdFunding/media/static
+      - ./web/media/static:/django_ec2/web/media/static
     expose:
       - "8000"
     
   nginx:
     restart: always
     build: ./nginx/
+    volumes:
+      - ./web/media/static:/static
     ports:
       - "80:80"
     
