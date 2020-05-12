@@ -1,0 +1,18 @@
+version: '3'
+
+services:
+  web:
+    restart: always
+    build: ./web
+    command: gunicorn crowdFunding.wsgi:application --bind 0.0.0.0:8000
+    volumes:
+      - static_volume:/deploy/web/crowdFunding/media/static
+    expose:
+      - "8000"
+    
+  nginx:
+    restart: always
+    build: ./nginx/
+    ports:
+      - "80:80"
+    

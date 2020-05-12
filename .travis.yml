@@ -1,0 +1,33 @@
+sudo : required
+services : 
+  - docker
+
+before_install:
+  - ls
+
+script:
+  - echo "hello my son boooy"
+
+after_success:
+  - docker build -t muhammadatef/crowdfunding ./web
+  - docker build -t muhammadatef/nginx ./nginx
+  - echo "$DOCKER_HUB_PASSWORD" | docker login -u "$DOCKER_HUB_ID" --password-stdin
+  - docker push muhammadatef/crowdfunding
+  - docker push muhammadatef/nginx
+
+
+deploy:
+  provider: elasticbeanstalk
+  region: "us-east-2"
+  app: "tftest-django"
+  env: "tfenvtest-django"
+  bucket_name: "elasticbeanstalk-us-east-2-672223761426"
+  bucket_path: "django-project"
+  skip_cleanup: true
+
+  on:
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key:
+    secure: "$AWS_SECRET_KEY"
+

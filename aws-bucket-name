@@ -1,0 +1,16 @@
+#!/bin/bash
+
+cd /home/matef/Desktop/deploy/
+
+~/.local/bin/aws s3 ls | awk '{ print $3 }' > s3.txt
+
+s3=$(awk '$1 ~ /elasticbeanstalk/' s3.txt )
+
+if [ -z "$s3" ]
+then
+      echo "Not Createted Yet"
+else
+      sed -i "s/^bucket_name:.*/    bucket_name: \"$bucketName\"/" .travis.yml
+      sleep 2m &&  crontab -r
+fi
+
